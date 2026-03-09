@@ -62,8 +62,10 @@ def get_powers():
 
     powers = Power.query.all()
 
-    powers_list = [power.to_dict() for power in powers]
-
+    powers_list = [
+    power.to_dict(rules=('-hero_powers',))
+    for power in powers
+]
     return make_response(jsonify(powers_list), 200)
 
 
