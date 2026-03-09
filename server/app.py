@@ -24,9 +24,9 @@ def index():
     return "<h1>Superheroes API</h1>"
 
 
-# -----------------------------
+
 # GET /heroes
-# -----------------------------
+
 @app.route("/heroes", methods=["GET"])
 def get_heroes():
     heroes = Hero.query.all()
@@ -37,9 +37,9 @@ def get_heroes():
     return make_response(jsonify(heroes_list), 200)
 
 
-# -----------------------------
+
 # GET /heroes/<id>
-# -----------------------------
+
 @app.route("/heroes/<int:id>", methods=["GET"])
 def get_hero_by_id(id):
     hero = Hero.query.filter(Hero.id == id).first()
@@ -50,9 +50,8 @@ def get_hero_by_id(id):
     return make_response(jsonify(hero_dict), 200)
 
 
-# -----------------------------
 # GET /powers
-# -----------------------------
+
 @app.route("/powers", methods=["GET"])
 def get_powers():
     powers = Power.query.all()
@@ -61,9 +60,8 @@ def get_powers():
     return make_response(jsonify(powers_list), 200)
 
 
-# -----------------------------
+
 # GET /powers/<id>
-# -----------------------------
 @app.route("/powers/<int:id>", methods=["GET"])
 def get_power_by_id(id):
     power = Power.query.filter(Power.id == id).first()
@@ -73,9 +71,8 @@ def get_power_by_id(id):
     return make_response(jsonify(power.to_dict(only=("id", "name", "description"))), 200)
 
 
-# -----------------------------
 # PATCH /powers/<id>
-# -----------------------------
+
 @app.route("/powers/<int:id>", methods=["PATCH"])
 def update_power(id):
     power = Power.query.filter(Power.id == id).first()
