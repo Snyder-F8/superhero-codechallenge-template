@@ -18,9 +18,18 @@ class Hero(db.Model, SerializerMixin):
     name = db.Column(db.String)
     super_name = db.Column(db.String)
 
-    # add relationship
+    # Relationship
+    hero_powers = db.relationship(
+        'HeroPower',
+        back_populates='hero',
+        cascade='all, delete-orphan'
+    )
 
-    # add serialization rules
+    # Association proxy
+    powers = association_proxy('hero_powers', 'power')
+
+    # Serialization rules
+    serialize_rules = ('-hero_powers.hero',)
 
     def __repr__(self):
         return f'<Hero {self.id}>'
@@ -33,11 +42,25 @@ class Power(db.Model, SerializerMixin):
     name = db.Column(db.String)
     description = db.Column(db.String)
 
-    # add relationship
+    # Relationship
+    hero_powers = db.relationship(
+        'HeroPower',
+        back_populates='power',
+        cascade='all, delete-orphan'
+    )
 
-    # add serialization rules
+    # Association proxy
+    heroes = association_proxy('hero_powers', 'hero')
 
-    # add validation
+    # Serialization rules
+    serialize_rules = ('-hero_powers.power',)
+
+    # Validation
+    @validates("description")
+    def validate_description(self, key, description):
+        if not description or len(description) < 20:
+            raise ValueError("Description must be present and at least 20 characters long")
+        return description
 
     def __repr__(self):
         return f'<Power {self.id}>'
@@ -49,11 +72,23 @@ class HeroPower(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     strength = db.Column(db.String, nullable=False)
 
-    # add relationships
+    hero_id = db.Column(db.Integer, db.ForeignKey('heroes.id'))
+    power_id = db.Column(db.Integer, db.ForeignKey('powers.id'))
 
-    # add serialization rules
+    # Relationships
+    hero = db.relationship('Hero', back_populates='hero_powers')
+    power = db.relationship('Power', back_populates='hero_powers')
 
-    # add validation
+    # Serialization rules
+    serialize_rules = ('-hero.hero_powers', '-power.hero_powers')
+
+    # Validation
+    @validates("strength")
+    def validate_strength(self, key, strength):
+        valid_strengths = ['Strong', 'Weak', 'Average']
+        if strength not in valid_strengths:
+            raise ValueError("Strength must be 'Strong', 'Weak', or 'Average'")
+        return strength
 
     def __repr__(self):
         return f'<HeroPower {self.id}>'
