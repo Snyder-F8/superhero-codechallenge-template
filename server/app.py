@@ -99,8 +99,10 @@ def update_power(id):
 
         db.session.commit()
 
-        return make_response(jsonify(power.to_dict()), 200)
-
+        return make_response(
+    jsonify(power.to_dict(rules=('-hero_powers',))),
+    200
+)
     except Exception as e:
 
         return make_response(jsonify({"errors": [str(e)]}), 400)
