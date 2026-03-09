@@ -24,9 +24,9 @@ def index():
     return "<h1>Superheroes API</h1>"
 
 
-# -----------------------------
+
 # GET /heroes
-# -----------------------------
+
 @app.route("/heroes", methods=["GET"])
 def get_heroes():
 
@@ -40,9 +40,9 @@ def get_heroes():
     return make_response(jsonify(heroes_list), 200)
 
 
-# -----------------------------
+
 # GET /heroes/<id>
-# -----------------------------
+
 @app.route("/heroes/<int:id>", methods=["GET"])
 def get_hero_by_id(id):
 
@@ -54,9 +54,9 @@ def get_hero_by_id(id):
     return make_response(jsonify(hero.to_dict()), 200)
 
 
-# -----------------------------
+
 # GET /powers
-# -----------------------------
+
 @app.route("/powers", methods=["GET"])
 def get_powers():
 
@@ -67,9 +67,8 @@ def get_powers():
     return make_response(jsonify(powers_list), 200)
 
 
-# -----------------------------
 # GET /powers/<id>
-# -----------------------------
+
 @app.route("/powers/<int:id>", methods=["GET"])
 def get_power_by_id(id):
 
