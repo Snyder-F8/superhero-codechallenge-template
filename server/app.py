@@ -81,9 +81,7 @@ def get_power_by_id(id):
     return make_response(jsonify(power.to_dict()), 200)
 
 
-# -----------------------------
 # PATCH /powers/<id>
-# -----------------------------
 @app.route("/powers/<int:id>", methods=["PATCH"])
 def update_power(id):
 
@@ -107,9 +105,7 @@ def update_power(id):
         return make_response(jsonify({"errors": [str(e)]}), 400)
 
 
-# -----------------------------
 # POST /hero_powers
-
 @app.route("/hero_powers", methods=["POST"])
 def create_hero_power():
 
