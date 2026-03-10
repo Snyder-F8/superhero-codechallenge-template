@@ -112,7 +112,7 @@ def create_hero_power():
                 "-power.hero_powers",
             )
         )
-        return make_response(jsonify(response), 201)
+        return make_response(jsonify(response), 200)
     except Exception as e:
         return make_response(jsonify({"errors": [str(e)]}), 400)
 
