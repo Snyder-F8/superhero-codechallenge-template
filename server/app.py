@@ -114,7 +114,7 @@ def create_hero_power():
         )
         return make_response(jsonify(response), 200)
     except Exception as e:
-        return make_response(jsonify({"errors": [str(e)]}), 400)
+        return make_response(jsonify({"errors": ["validation errors"]}), 400)
 
 
 if __name__ == "__main__":
