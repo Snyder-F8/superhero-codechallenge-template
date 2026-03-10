@@ -88,13 +88,11 @@ def update_power(id):
             jsonify(power.to_dict(only=("id", "name", "description"))),
             200
         )
-    except Exception as e:
-        return make_response(jsonify({"errors": [str(e)]}), 400)
+    except Exception:
+        return make_response(jsonify({"errors": ["validation errors"]}), 400)
 
 
-# -----------------------------
 # POST /hero_powers
-# -----------------------------
 @app.route("/hero_powers", methods=["POST"])
 def create_hero_power():
     data = request.get_json()
